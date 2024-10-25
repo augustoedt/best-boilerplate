@@ -95,4 +95,4 @@ export const app = new Elysia({ prefix: '/api' }).use(auth);
 
 export type App = typeof app;
 
-export const api = treaty<App>('localhost:5173');
+export const treatyApi = treaty<App>('localhost:5173');

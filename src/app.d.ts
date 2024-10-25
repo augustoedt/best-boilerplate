@@ -4,7 +4,7 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			app: typeof import('$lib/server/api').api;
+			app: typeof import('$lib/server/api').treatyApi;
 		}
 		// interface PageData {}
 		// interface PageState {}

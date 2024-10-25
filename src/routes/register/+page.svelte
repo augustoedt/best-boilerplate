@@ -8,7 +8,7 @@
 <div class="mx-auto flex h-screen w-fit flex-col justify-center">
 	<div class="w-fit">
 		<RegisterForm data={data.form} title="Register" />
-		<div>
+		<div class="w-full flex justify-end">
 			<Button variant="link" href="/">Já tenho cadastro</Button>
 		</div>
 	</div>

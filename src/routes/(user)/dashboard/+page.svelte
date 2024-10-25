@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Button from '@/components/ui/button/button.svelte';
-import Input from '@/components/ui/input/input.svelte';
 	import { superForm } from 'sveltekit-superforms';
 
 	export let data;

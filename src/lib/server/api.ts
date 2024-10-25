@@ -29,9 +29,6 @@ export const auth = new Elysia().group('/auth', (auth) => {
 
 				const current = await db.query.users.findFirst({
 					where: (users, { eq }) => eq(users.email, email),
-					with: {
-						detailId: true
-					}
 				});
 
 				if (!current) {

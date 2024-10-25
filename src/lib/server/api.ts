@@ -2,7 +2,6 @@ import { Elysia, error, t } from 'elysia';
 import { db } from './db';
 import { userDetails, users } from './db/schema';
 import jwt from '@elysiajs/jwt';
-import { Avatar } from 'bits-ui';
 
 const loginSchema = t.Object({
 	email: t.String(),

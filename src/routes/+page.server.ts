@@ -29,9 +29,7 @@ export const actions: Actions = {
 
 		const values = form.data;
 
-		const app = treaty<App>('localhost:5173');
-
-		const { data, error } = await app.api.auth.login.post({
+		const { data, error } = await event.locals.app.api.auth.login.post({
 			email: values.email,
 			password: values['current-password']
 		});

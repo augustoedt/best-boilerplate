@@ -2,6 +2,7 @@ import { Elysia, error, t } from 'elysia';
 import { db } from './db';
 import { userDetails, users } from './db/schema';
 import jwt from '@elysiajs/jwt';
+import { treaty } from '@elysiajs/eden';
 
 const loginSchema = t.Object({
 	email: t.String(),
@@ -93,3 +94,5 @@ export const auth = new Elysia().group('/auth', (auth) => {
 export const app = new Elysia({ prefix: '/api' }).use(auth);
 
 export type App = typeof app;
+
+export const api = treaty<App>('localhost:5173');

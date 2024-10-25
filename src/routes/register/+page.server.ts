@@ -23,9 +23,7 @@ export const actions: Actions = {
 			});
 		}
 
-		const app = treaty<App>('localhost:5173');
-
-		const { data, error } = await app.api.auth.register.post({
+		const { data, error } = await event.locals.app.api.auth.register.post({
 			email: form.data.email,
 			password: form.data.password
 		});

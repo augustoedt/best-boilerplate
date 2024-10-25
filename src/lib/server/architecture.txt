@@ -1,0 +1,7 @@
+controller: recebe uma requisição e extrai os dados.
+
+usecase: invocado pelo controller, aplicando a lógica de negócios com base nos dados fornecidos.
+
+repositório: interage com o banco de dados para obter ou salvar dados conforme instruído pelo usecase.
+
+model: define a estrutura das entidades com as quais o repositório e o usecase trabalham.

@@ -8,7 +8,7 @@ import { fail, redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async (event) => {
 	if (event.cookies.get('token')) {
-		// redirect to dashboard page
+
 		return redirect(302, '/dashboard');
 	}
 
@@ -21,6 +21,8 @@ export const actions: Actions = {
 	default: async (event) => {
 		const form = await superValidate(event, zod(formLoginSchema));
 
+		const app = event.locals.app;
+
 		if (!form.valid) {
 			return fail(400, {
 				form
@@ -29,7 +31,7 @@ export const actions: Actions = {
 
 		const values = form.data;
 
-		const { data, error } = await event.locals.app.api.auth.login.post({
+		const { data, error } = await app.api.auth.login.post({
 			email: values.email,
 			password: values['current-password']
 		});

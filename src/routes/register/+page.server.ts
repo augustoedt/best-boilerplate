@@ -1,7 +1,5 @@
 import type { Actions, PageServerLoad } from './$types.js';
 import { superValidate } from 'sveltekit-superforms';
-import type { App } from '$lib/server/api';
-import { treaty } from '@elysiajs/eden';
 import { formRegisterSchema } from '$lib/schemas';
 import { zod } from 'sveltekit-superforms/adapters';
 import { fail } from '@sveltejs/kit';
@@ -16,6 +14,8 @@ export const actions: Actions = {
 	default: async (event) => {
 		const form = await superValidate(event, zod(formRegisterSchema));
 
+		const app = event.locals.app
+
 		if (!form.valid) {
 			return fail(400, {
 				form,
@@ -23,7 +23,7 @@ export const actions: Actions = {
 			});
 		}
 
-		const { data, error } = await event.locals.app.api.auth.register.post({
+		const { data, error } = await app.api.auth.register.post({
 			email: form.data.email,
 			password: form.data.password
 		});

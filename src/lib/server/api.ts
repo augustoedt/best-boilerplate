@@ -28,7 +28,10 @@ export const auth = new Elysia().group('/auth', (auth) => {
 				const { email, password } = body;
 
 				const current = await db.query.users.findFirst({
-					where: (users, { eq }) => eq(users.email, email)
+					where: (users, { eq }) => eq(users.email, email),
+					with: {
+						detailId: true
+					}
 				});
 
 				if (!current) {
@@ -36,16 +39,6 @@ export const auth = new Elysia().group('/auth', (auth) => {
 				}
 
 				const valid = await Bun.password.verify(password, current.passhash);
-
-				let details = await db.query.userDetails.findFirst({
-					where: (userDetails, { eq }) => eq(userDetails.userId, current.id)
-				});
-
-				if (!details) {
-					await db.insert(userDetails).values({
-						userId: current.id
-					})
-				}
 
 				if (!valid) {
 					return error(401, 'Invalid email or password');
@@ -68,11 +61,18 @@ export const auth = new Elysia().group('/auth', (auth) => {
 					cost: 4
 				});
 
+				const details = await db.insert(userDetails).values({}).returning({id: userDetails.id});
+
+				if (details.length === 0 || !details[0].id) {
+					return error(500, 'Failed to register user');
+				}
+
 				const result = await db
 					.insert(users)
 					.values({
 						email,
-						passhash
+						passhash,
+						detailsId: details[0].id
 					})
 					.returning();
 
@@ -82,9 +82,7 @@ export const auth = new Elysia().group('/auth', (auth) => {
 					return error(500, 'Failed to register user');
 				}
 
-				const details = await db.insert(userDetails).values({
-					userId: result[0].id
-				})
+
 
 				return { id: result[0].id };
 			},

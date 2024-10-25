@@ -5,6 +5,7 @@ export const users = sqliteTable('users', {
 		.$defaultFn(() => crypto.randomUUID())
 		.primaryKey(),
 	passhash: text('passhash').notNull(),
+	detailsId: text('details').references(()=>userDetails.id),
 	email: text('email').notNull().unique()
 });
 
@@ -12,7 +13,6 @@ export const userDetails = sqliteTable('user_details', {
 	id: text('id')
 		.$defaultFn(() => crypto.randomUUID())
 		.primaryKey(),
-	userId: text('user_id').notNull().references(()=>users.id),
 	firstname: text('firstname'),
 	lastname: text('lastname'),
 	avatar: text('avatar'),

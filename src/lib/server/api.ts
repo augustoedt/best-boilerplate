@@ -14,16 +14,15 @@ const registerSchema = t.Object({
 	password: t.String()
 });
 
-export const auth = new Elysia().group('/auth', (auth) => {
+
+
+const auth = new Elysia().group('/auth', (auth) => {
 	return auth
-		.use(
-			jwt({
+		.use(jwt({
 				name: 'jwt',
 				secret: 'mysecret'
-			})
-		)
-		.post(
-			'/login',
+			}))
+		.post('/login',
 			async ({ body, jwt }) => {
 
 				const { email, password } = body;
@@ -51,8 +50,7 @@ export const auth = new Elysia().group('/auth', (auth) => {
 			},
 			{ body: loginSchema }
 		)
-		.post(
-			'/register',
+		.post('/register',
 			async ({ body }) => {
 				const { email, password } = body;
 
